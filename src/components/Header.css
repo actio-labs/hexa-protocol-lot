@@ -1,0 +1,58 @@
+/* Header bileşeni için genel düzen */
+.header {
+    display: flex;
+    justify-content: space-between; /* İçerikleri sağa, sola ve ortaya yayar */
+    align-items: center; /* İçerikleri dikeyde ortalar */
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+}
+
+/* Logo ve site ismi düzeni */
+.logo {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #7e18cb;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 80px; /* Logo genişliği */
+    margin-right: 10px; /* Sağında boşluk bırakır */
+}
+
+/* Menü bağlantıları */
+.menu-links {
+    display: flex;
+    justify-content: center; /* Menü bağlantıları ortalanır */
+    flex-grow: 1; /* Alanı esnek şekilde doldurur */
+}
+
+.menu-links a {
+    margin: 0 15px; /* Sağ ve sol boşluk */
+    text-decoration: none; /* Alt çizgiyi kaldırır */
+    color: #333; /* Bağlantı rengi */
+    font-weight: 500; /* Yazı kalınlığı */
+    padding: 8px 12px; /* Bağlantıların iç boşluğu */
+    border-radius: 6px; /* Köşeleri hafif yuvarlatma */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Yumuşak geçiş efekti */
+}
+/* Bağlantılar üzerine gelince renk ve arka plan değişimi */
+.menu-links a:hover {
+    background-color: #7600d1; /* Arka plan rengi mor */
+    color: #ffffff; /* Yazı rengi beyaz */
+}
+
+/* Sağdaki Cüzdan Bağla butonu */
+.connect-wallet-button {
+    padding: 10px 20px;
+    background-color: #7600d1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Geçiş efektleri */
+    margin-left: auto; /* Butonu en sağa iter */
+}
