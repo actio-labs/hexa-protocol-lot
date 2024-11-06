@@ -21,7 +21,7 @@ function App() {
     const [isTableDetailsOpen, setIsTableDetailsOpen] = useState(false);
     const [currentTable, setCurrentTable] = useState(null);
     const [tables, setTables] = useState(
-        Array(6).fill().map(() => ({ participants: [], reward: 0, isJoined: false }))
+        Array(12).fill().map(() => ({ participants: [], reward: 0, isJoined: false }))
     );
     const [winner, setWinner] = useState(null);
 
