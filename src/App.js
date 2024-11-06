@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { ethers } from 'ethers';
+import React, { useState, useEffect } from 'react';
+import { ethers, formatEther, parseEther } from 'ethers';
 import Header from './components/Header';
 import LotteryTable from './components/LotteryTable';
 import TableDetailsModal from './components/TableDetailsModal';
+import LotteryContractABI from './contracts/LotteryContract.json';
 import './App.css';
-
 // Rastgele bir sayı üretmek için yardımcı işlev, ekrandaki toplar için.
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -15,31 +15,15 @@ function pickWinner(participants) {
     const winnerIndex = Math.floor(Math.random() * participants.length);
     return participants[winnerIndex];
 }
-
 function App() {
-    const [account, setAccount] = useState(null); // Cüzdan adresi durumu
+    const [account, setAccount] = useState(null);
     const [isTableDetailsOpen, setIsTableDetailsOpen] = useState(false);
     const [currentTable, setCurrentTable] = useState(null);
     const [tables, setTables] = useState(
         Array(12).fill().map(() => ({ participants: [], reward: 0, isJoined: false }))
     );
     const [winner, setWinner] = useState(null);
-
-    // MetaMask cüzdanını bağlama işlevi
-    async function connectWallet() {
-        if (window.ethereum) {
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                setAccount(accounts[0]);
-            } catch (error) {
-                console.error("Cüzdan bağlantısı başarısız:", error);
-            }
-        } else {
-            alert("Lütfen MetaMask'i yükleyin!");
-        }
-    }
-
-    // Animasyonlu topların sayısı
+    const [lotteryContract, setLotteryContract] = useState(null);
     const circles = Array.from({ length: 10 }, (_, index) => (
         <div
             key={index}
@@ -54,13 +38,73 @@ function App() {
             {getRandomInt(1, 100)}
         </div>
     ));
-        // Sahte Taiko token bakiyesi kontrol işlevi (gerçek bir kontrol için blockchain API kullanılmalı)
-    async function checkTaikoBalance(account) {
-        // Burada cüzdanın Taiko token bakiyesini kontrol etmek için gerçek bir çağrı yapabilirsiniz
-        // Şimdilik yeterli bakiyeye sahip olduğunu varsayıyoruz
-        const fakeBalance = 2; // Örnek bakiye
-        return fakeBalance >= 1;
+    // MetaMask cüzdanını bağlama işlevi
+    async function connectWallet() {
+        if (window.ethereum) {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                setAccount(accounts[0]);
+
+                // Ethers ile kontrata bağlan
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
+                const contract = new ethers.Contract(
+                    "0xd9fd08563DBA96C48A7267bf972fda57eb7d55d9", // Akıllı kontrat adresini buraya girin
+                    LotteryContractABI.abi,
+                    signer
+                );
+                setLotteryContract(contract);
+            } catch (error) {
+                console.error("Cüzdan bağlantısı başarısız:", error);
+            }
+        } else {
+            alert("Lütfen MetaMask'i yükleyin!");
+        }
     }
+
+    // Akıllı kontrattan lottery bilgilerini almak için işlev
+    const fetchLotteries = async () => {
+        console.log("start fetchLotteries")
+        console.log(lotteryContract)
+        if (!lotteryContract) return;
+
+        try {
+            console.log("try fetchLotteries")
+            // Son 10 lottery verisini kontrattan çek
+            const lotteries = await lotteryContract.getLastLotteries(10);
+            console.log(lotteries)
+            // Tuple verisini kendi özel obje yapına dönüştür
+            const mappedLotteries = lotteries.map(lottery => ({
+                id: Number(lottery[0]), // `BigInt` olarak gelir, güvenle `Number`'a dönüştürülebilir
+                startBlock: Number(lottery[1]),
+                startTime: new Date(Number(lottery[2]) * 1000), // Unix timestamp'i JS Date'e çeviriyoruz
+                participants: lottery[3],
+                isActive: lottery[4],
+                winner: lottery[5],
+                ticketPrice: formatEther(lottery[6]), // BigInt ETH değerini formatlıyoruz
+                serviceFee: formatEther(lottery[7]),
+                participantLimit: Number(lottery[9])
+            }));
+
+            console.log(mappedLotteries)
+
+
+            setTables(
+                mappedLotteries.map((lottery) => ({
+                    participants: lottery.participants,
+                    reward: lottery.reward,
+                    isJoined: lottery.participants.includes(account),
+                    participantLimit: lottery.participantLimit
+                }))
+            );
+        } catch (error) {
+            console.error("Lottery verileri alınamadı:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchLotteries();
+    }, [lotteryContract, account]);
 
     // Katılma işlemini yöneten işlev
     const onJoinTable = async (tableId, maxParticipants) => {
@@ -69,44 +113,35 @@ function App() {
             return;
         }
 
-        const tableIndex = tableId - 1;
+        try {
+            // Katılım işlemini kontrata göndermek
+            const tx = await lotteryContract.joinTable(tableId, { value: ethers.parseEther("0.01") }); // Örnek olarak 0.01 ETH
+            await tx.wait();
 
-        // Taiko token yeterli mi kontrol et
-        const hasEnoughTaiko = await checkTaikoBalance(account);
-        if (!hasEnoughTaiko) {
-            alert("Yetersiz Taiko token.");
-            return;
+            // Katılımcıyı güncelle ve UI'de göster
+            setTables((prevTables) => {
+                const updatedTable = {
+                    ...prevTables[tableId - 1],
+                    participants: [...prevTables[tableId - 1].participants, account],
+                    reward: prevTables[tableId - 1].reward + 1,
+                    isJoined: true
+                };
+                const newTables = [...prevTables];
+                newTables[tableId - 1] = updatedTable;
+
+                // Maksimum katılımcıya ulaşıldığında kazananı belirle
+                if (updatedTable.participants.length >= maxParticipants) {
+                    const selectedWinner = pickWinner(updatedTable.participants);
+                    setWinner(selectedWinner);
+                }
+                return newTables;
+            });
+
+            setCurrentTable(tableId);
+            setIsTableDetailsOpen(true);
+        } catch (error) {
+            console.error("Katılım işlemi başarısız:", error);
         }
-
-        setTables((prevTables) => {
-            // En güncel tablo durumunu kontrol et ve tekrar katılımı önle
-            if (prevTables[tableIndex].participants.includes(account)) {
-                alert("Bu masaya zaten katıldınız.");
-                return prevTables; // Aynı tabloyu döndür, değişiklik yok
-            }
-
-            // Yeni katılımcı ekle
-            const updatedTable = {
-                ...prevTables[tableIndex],
-                participants: [...prevTables[tableIndex].participants, account],
-                reward: prevTables[tableIndex].reward + 1,
-                isJoined: true
-            };
-
-            const newTables = [...prevTables];
-            newTables[tableIndex] = updatedTable;
-
-            // Maksimum katılımcıya ulaşıldığında kazananı belirle
-            if (updatedTable.participants.length >= maxParticipants) {
-                const selectedWinner = pickWinner(updatedTable.participants);
-                setWinner(selectedWinner);
-            }
-
-            return newTables;
-        });
-
-        setCurrentTable(tableId);
-        setIsTableDetailsOpen(true);
     };
 
     // Masa Detayları Modali Açma İşlevi
@@ -115,8 +150,6 @@ function App() {
         setIsTableDetailsOpen(true);
     };
 
-
-    // Modal kapatma işlevi
     const closeTableDetailsModal = () => {
         setIsTableDetailsOpen(false);
         setWinner(null);
@@ -125,7 +158,7 @@ function App() {
     return (
         <div>
             <div className="side-panel left-panel">{circles}</div>
-            <div className="side-panel right-panel">{circles}</div>
+            <div className="side-panel right-panel">{circles}</div>   
             
             <Header account={account} onConnectWallet={connectWallet} />
             <main style={{ padding: '20px', textAlign: 'center' }}>
@@ -138,11 +171,11 @@ function App() {
                             account={account}
                             onJoin={onJoinTable}
                             tableId={index + 1}
-                            maxParticipants={index < 3 ? 5 : 10}
+                            maxParticipants={table.participantLimit}
                             participantsCount={table.participants.length}
                             reward={table.reward}
                             isJoined={table.isJoined}
-                            showTableDetails={showTableDetails} // showTableDetails işlevini gönderiyoruz
+                            showTableDetails={showTableDetails}
                         />
                     ))}
                 </div>
