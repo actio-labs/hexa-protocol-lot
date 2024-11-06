@@ -70,8 +70,8 @@ function App() {
 
         try {
             console.log("try fetchLotteries")
-            // Son 10 lottery verisini kontrattan çek
-            const lotteries = await lotteryContract.getLastLotteries(10);
+            // Son 9 lottery verisini kontrattan çek
+            const lotteries = await lotteryContract.getLastLotteries(9);
             console.log(lotteries)
             // Tuple verisini kendi özel obje yapına dönüştür
             const mappedLotteries = lotteries.map(lottery => ({
@@ -81,7 +81,7 @@ function App() {
                 participants: lottery[3],
                 isActive: lottery[4],
                 winner: lottery[5],
-                ticketPrice: formatEther(lottery[6]), // BigInt ETH değerini formatlıyoruz
+                ticketTokenAddress: lottery[6], // BigInt ETH değerini formatlıyoruz
                 serviceFee: formatEther(lottery[7]),
                 participantLimit: Number(lottery[9])
             }));
@@ -90,12 +90,7 @@ function App() {
 
 
             setTables(
-                mappedLotteries.map((lottery) => ({
-                    participants: lottery.participants,
-                    reward: lottery.reward,
-                    isJoined: lottery.participants.includes(account),
-                    participantLimit: lottery.participantLimit
-                }))
+                mappedLotteries
             );
         } catch (error) {
             console.error("Lottery verileri alınamadı:", error);
@@ -158,22 +153,23 @@ function App() {
     return (
         <div>
             <div className="side-panel left-panel">{circles}</div>
-            <div className="side-panel right-panel">{circles}</div>   
-            
+            <div className="side-panel right-panel">{circles}</div>
+
             <Header account={account} onConnectWallet={connectWallet} />
             <main style={{ padding: '20px', textAlign: 'center' }}>
                 <h1>Lot-Chain Piyango Masaları</h1>
-                
+
                 <div className="lottery-tables-container">
                     {tables.map((table, index) => (
                         <LotteryTable
                             key={index}
                             account={account}
                             onJoin={onJoinTable}
-                            tableId={index + 1}
+                            tableId={table.id}
                             maxParticipants={table.participantLimit}
                             participantsCount={table.participants.length}
                             reward={table.reward}
+                            ticketTokenAddress={table.ticketTokenAddress}
                             isJoined={table.isJoined}
                             showTableDetails={showTableDetails}
                         />
