@@ -94,11 +94,13 @@ function App() {
                 serviceFee: Number(lottery[8]),
                 participantLimit: Number(lottery[9])
             }));
-
+            console.log(lotteryContract)
             const mappedLotteries1 = mappedLotteries.map(lottery => ({
                 ...lottery,
                 tokenInfo: tokenData[lottery.ticketTokenAddress] || { name: "Unknown", symbol: "Unknown" },
-                reward: lottery.participants.length * lottery.participationFee
+                reward: lottery.participants.length * lottery.participationFee,
+                contractAddress: lotteryContract["target"],
+                userAccount: account
             }));
 
             console.log(mappedLotteries1)
@@ -123,31 +125,32 @@ function App() {
         }
 
         try {
+            console.log("start onJoinTable tableId:", tableId)
             // Katılım işlemini kontrata göndermek
-            const tx = await lotteryContract.joinTable(tableId, { value: ethers.parseEther("0.01") }); // Örnek olarak 0.01 ETH
+            const tx = await lotteryContract.participate(tableId); // Örnek olarak 0.01 ETH
             await tx.wait();
-
+            fetchLotteries()
             // Katılımcıyı güncelle ve UI'de göster
-            setTables((prevTables) => {
-                const updatedTable = {
-                    ...prevTables[tableId - 1],
-                    participants: [...prevTables[tableId - 1].participants, account],
-                    reward: prevTables[tableId - 1].reward + 1,
-                    isJoined: true
-                };
-                const newTables = [...prevTables];
-                newTables[tableId - 1] = updatedTable;
+            // setTables((prevTables) => {
+            //     const updatedTable = {
+            //         ...prevTables[tableId - 1],
+            //         participants: [...prevTables[tableId - 1].participants, account],
+            //         reward: prevTables[tableId - 1].reward + 1,
+            //         isJoined: true
+            //     };
+            //     const newTables = [...prevTables];
+            //     newTables[tableId - 1] = updatedTable;
 
-                // Maksimum katılımcıya ulaşıldığında kazananı belirle
-                if (updatedTable.participants.length >= maxParticipants) {
-                    const selectedWinner = pickWinner(updatedTable.participants);
-                    setWinner(selectedWinner);
-                }
-                return newTables;
-            });
+            //     // Maksimum katılımcıya ulaşıldığında kazananı belirle
+            //     if (updatedTable.participants.length >= maxParticipants) {
+            //         const selectedWinner = pickWinner(updatedTable.participants);
+            //         setWinner(selectedWinner);
+            //     }
+            //     return newTables;
+            // });
 
-            setCurrentTable(tableId);
-            setIsTableDetailsOpen(true);
+            // setCurrentTable(tableId);
+            // setIsTableDetailsOpen(true);
         } catch (error) {
             console.error("Katılım işlemi başarısız:", error);
         }
@@ -186,6 +189,8 @@ function App() {
                             ticketTokenAddress={table.ticketTokenAddress}
                             ticketTokenSymbol={table.tokenInfo?.symbol}
                             isJoined={table.isJoined}
+                            userAccount={table.userAccount}
+                            contractAddress={table.contractAddress}
                             showTableDetails={showTableDetails}
                         />
                     ))}
