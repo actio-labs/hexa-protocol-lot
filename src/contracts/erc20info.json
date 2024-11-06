@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "address": "0x2029Ca1e4A5954781a271d6Fa3598bF4434969f5",
+            "name": "Bridged Horse Token",
+            "symbol": "HORSE.t"
+        },
+        {
+            "address": "0x985A9f3B95d6B01e69060483770A34CC3DF569D4",
+            "name": "ChanceX",
+            "symbol": "CHX"
+        },
+        {
+            "address": "0xb65A88D528294B04bF789f1c432a094E148f4E98",
+            "name": "Taiko Token",
+            "symbol": "TAIKO"
+        },
+        {
+            "address": "0x0E75113515F0EC6E03cf881949Aea6e273878f12",
+            "name": "USD Coin",
+            "symbol": "USDC"
+        }
+    ]
+}

@@ -4,6 +4,8 @@ import Header from './components/Header';
 import LotteryTable from './components/LotteryTable';
 import TableDetailsModal from './components/TableDetailsModal';
 import LotteryContractABI from './contracts/LotteryContract.json';
+import Erc20ABI from './contracts/erc20.json';
+import Erc20json from './contracts/erc20info.json';
 import './App.css';
 // Rastgele bir sayı üretmek için yardımcı işlev, ekrandaki toplar için.
 function getRandomInt(min, max) {
@@ -24,6 +26,12 @@ function App() {
     );
     const [winner, setWinner] = useState(null);
     const [lotteryContract, setLotteryContract] = useState(null);
+    const tokenData = {
+        "0x2029Ca1e4A5954781a271d6Fa3598bF4434969f5": { name: "Bridged Horse Token", symbol: "HORSE.t" },
+        "0x985A9f3B95d6B01e69060483770A34CC3DF569D4": { name: "ChanceX", symbol: "CHX" },
+        "0xb65A88D528294B04bF789f1c432a094E148f4E98": { name: "Taiko Token", symbol: "TAIKO" },
+        "0x0E75113515F0EC6E03cf881949Aea6e273878f12": { name: "USD Coin", symbol: "USDC" }
+    };
     const circles = Array.from({ length: 10 }, (_, index) => (
         <div
             key={index}
@@ -49,7 +57,7 @@ function App() {
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const signer = await provider.getSigner();
                 const contract = new ethers.Contract(
-                    "0xd9fd08563DBA96C48A7267bf972fda57eb7d55d9", // Akıllı kontrat adresini buraya girin
+                    "0x22EE4e85FC622Dc55B63F5cf268Cfe8d6Ff5F3aE", // Akıllı kontrat adresini buraya girin
                     LotteryContractABI.abi,
                     signer
                 );
@@ -82,15 +90,21 @@ function App() {
                 isActive: lottery[4],
                 winner: lottery[5],
                 ticketTokenAddress: lottery[6], // BigInt ETH değerini formatlıyoruz
-                serviceFee: formatEther(lottery[7]),
+                participationFee: formatEther(lottery[7]),
+                serviceFee: Number(lottery[8]),
                 participantLimit: Number(lottery[9])
             }));
 
-            console.log(mappedLotteries)
+            const mappedLotteries1 = mappedLotteries.map(lottery => ({
+                ...lottery,
+                tokenInfo: tokenData[lottery.ticketTokenAddress] || { name: "Unknown", symbol: "Unknown" },
+                reward: lottery.participants.length * lottery.participationFee
+            }));
 
+            console.log(mappedLotteries1)
 
             setTables(
-                mappedLotteries
+                mappedLotteries1
             );
         } catch (error) {
             console.error("Lottery verileri alınamadı:", error);
@@ -170,6 +184,7 @@ function App() {
                             participantsCount={table.participants.length}
                             reward={table.reward}
                             ticketTokenAddress={table.ticketTokenAddress}
+                            ticketTokenSymbol={table.tokenInfo?.symbol}
                             isJoined={table.isJoined}
                             showTableDetails={showTableDetails}
                         />
