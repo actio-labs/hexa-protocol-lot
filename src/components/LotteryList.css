@@ -23,6 +23,79 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.token-section {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+}
+
+.token-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.token-info {
+  flex: 1;
+}
+
+.token-name-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.token-name-wrapper h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.token-symbol {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.lottery-id {
+  position: absolute;
+  right: 0;
+  top: -15px;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.price-section {
+  text-align: right;
+  margin-left: 30px;
+  min-width: 120px;
+  margin-top: 15px;
+}
+
+.price-tag {
+  color: #666;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.price-value {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.progress-section {
+  margin-bottom: 5px; /* 20px'den 15px'e düşürdük */
+}
+
+.card-bottom {
+  margin-top: 1px; /* Yeni margin-top ekledik */
+}
+
 /* Responsive tasarım için */
 @media (max-width: 768px) {
   .lottery-list {
@@ -30,4 +103,28 @@
     margin-left: 5%;
     margin-right: 5%;
   }
+}
+
+.address-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.address-chip {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.address-chip.current-user {
+  background-color: rgba(255, 223, 0, 0.2);
+  color: #b8860b;
+  font-weight: 600;
+}
+
+.address-chip.other-user {
+  background-color: #f5f5f5;
+  color: #333;
 } 

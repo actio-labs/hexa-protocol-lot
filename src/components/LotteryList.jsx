@@ -170,8 +170,12 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
                   <div className="participants-label">Current Participants:</div>
                   <div className="address-chips">
                     {lottery.participants.map((address, index) => (
-                      <div key={index} className="address-chip" title={address}>
-                        {`${address.slice(0, 6)}...${address.slice(-4)}`}
+                      <div 
+                        key={index} 
+                        className={`address-chip ${address.toLowerCase() === account?.toLowerCase() ? 'current-user' : 'other-user'}`} 
+                        title={address}
+                      >
+                        {`${address.slice(0, 4)}...${address.slice(-4)}`}
                       </div>
                     ))}
                   </div>
