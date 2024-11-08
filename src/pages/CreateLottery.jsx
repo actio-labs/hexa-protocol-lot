@@ -12,7 +12,7 @@ function CreateLottery() {
     });
     const [loading, setLoading] = useState(false);
 
-    const CONTRACT_ADDRESS = "0x22EE4e85FC622Dc55B63F5cf268Cfe8d6Ff5F3aE";
+    const CONTRACT_ADDRESS = "0x54e17216aD4A4BbA8F7F9314a036F8373Cc4a91e";
 
     // Form değişikliklerini handle et
     const handleChange = (e) => {

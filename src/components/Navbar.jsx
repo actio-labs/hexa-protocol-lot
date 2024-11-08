@@ -17,6 +17,7 @@ const Navbar = ({ account, onConnect, isCorrectNetwork }) => {
         <Link to="/">Home</Link>
         <Link to="/my-tickets">My Tickets</Link>
         <Link to="/create-lottery">Create Lottery</Link>
+        <Link to="/contract-manager">Contract Manager</Link>
         {!isCorrectNetwork && account && (
           <span className="wrong-network-warning">
             Wrong Network

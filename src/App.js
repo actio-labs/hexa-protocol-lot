@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import MyTickets from './pages/MyTickets';
 import CreateLottery from './pages/CreateLottery';
+import ContractManager from './pages/ContractManager';
 import './styles/main.css';
 
 function App() {
@@ -153,6 +154,7 @@ function App() {
                     <Route path="/" element={<Home account={account} />} />
                     <Route path="/my-tickets" element={<MyTickets />} />
                     <Route path="/create-lottery" element={<CreateLottery />} />
+                    <Route path="/contract-manager" element={<ContractManager />} />
                 </Routes>
             </Layout>
         </Router>
