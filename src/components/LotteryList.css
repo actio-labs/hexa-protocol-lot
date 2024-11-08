@@ -1,0 +1,33 @@
+.lottery-list {
+  width: 70%; /* %85 - %15 = %70 genişlik */
+  margin-left: 15%; /* Sol taraftan %15 boşluk */
+  margin-right: 15%; /* Sağ taraftan %15 boşluk */
+  display: flex;
+  flex-direction: column; /* Dikey yönde düzenleme */
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.lottery-card {
+  width: 100%; /* Her kart tam genişlikte olacak */
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lottery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive tasarım için */
+@media (max-width: 768px) {
+  .lottery-list {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+} 

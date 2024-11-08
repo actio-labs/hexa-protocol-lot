@@ -1,0 +1,46 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.main-content {
+  margin-top: 50px; /* Navbar yüksekliği kadar margin */
+  flex: 1;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px; /* İçeriğin maksimum genişliği */
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Active Lotteries başlığı için stil */
+.main-content h1 {
+  margin-top: 20px; /* Başlık için ek üst boşluk */
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Responsive tasarım için */
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .main-content h1 {
+    font-size: 1.5rem;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+} 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import tokenList from '../contracts/erc20info.json';
 import LotteryContractABI from '../contracts/LotteryContract.json';
+import './CreateLottery.css';
 
 function CreateLottery() {
     const [formData, setFormData] = useState({
@@ -14,7 +15,6 @@ function CreateLottery() {
 
     const CONTRACT_ADDRESS = "0x54e17216aD4A4BbA8F7F9314a036F8373Cc4a91e";
 
-    // Form değişikliklerini handle et
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -23,7 +23,6 @@ function CreateLottery() {
         }));
     };
 
-    // Lottery oluştur
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!window.ethereum) {
@@ -41,12 +40,10 @@ function CreateLottery() {
                 signer
             );
 
-            // Form verilerini kontrat için hazırla
             const ticketPrice = ethers.parseEther(formData.ticketPrice);
             const serviceFee = Number(formData.serviceFee);
             const participantLimit = Number(formData.participantLimit);
 
-            // Kontrat çağrısı
             const tx = await contract.startNewLottery(
                 formData.ticketTokenAddress,
                 ticketPrice,
@@ -57,7 +54,6 @@ function CreateLottery() {
             await tx.wait();
             alert("Lottery created successfully!");
             
-            // Formu sıfırla
             setFormData({
                 ticketTokenAddress: '',
                 ticketPrice: '',

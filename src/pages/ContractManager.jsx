@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import LotteryContractABI from '../contracts/LotteryContract.json';
+import './ContractManager.css';
 
 function ContractManager() {
     const [contract, setContract] = useState(null);
@@ -16,11 +17,9 @@ function ContractManager() {
     const CONTRACT_ADDRESS = "0x54e17216aD4A4BbA8F7F9314a036F8373Cc4a91e";
     const HEKLA_RPC_URL = "https://rpc.hekla.taiko.xyz";
 
-    // Kontrat kurulumu
     useEffect(() => {
         const setupContract = async () => {
             try {
-                // Önce read-only provider ile bağlan
                 const readProvider = new ethers.JsonRpcProvider(HEKLA_RPC_URL);
                 const readOnlyContract = new ethers.Contract(
                     CONTRACT_ADDRESS,
@@ -28,7 +27,6 @@ function ContractManager() {
                     readProvider
                 );
 
-                // Kontrat bilgilerini çek
                 const managerAddress = await readOnlyContract.manager();
                 const treasuryAddress = await readOnlyContract.treasury();
                 const lotteryId = await readOnlyContract.currentLotteryId();
@@ -37,7 +35,6 @@ function ContractManager() {
                 setTreasury(treasuryAddress);
                 setCurrentLotteryId(Number(lotteryId));
 
-                // Eğer MetaMask varsa, write işlemleri için signer ile kontratı ayarla
                 if (window.ethereum) {
                     const provider = new ethers.BrowserProvider(window.ethereum);
                     const signer = await provider.getSigner();
@@ -58,7 +55,6 @@ function ContractManager() {
         setupContract();
     }, []);
 
-    // Lottery detaylarını çek
     const fetchLotteryDetails = async (id) => {
         if (!contract || !id) return;
 
@@ -85,7 +81,6 @@ function ContractManager() {
         }
     };
 
-    // Kontrata ETH yükle
     const handleFundContract = async () => {
         if (!contract || !fundAmount) return;
 
@@ -105,7 +100,6 @@ function ContractManager() {
         }
     };
 
-    // Son lotteryleri getir
     const handleGetLastLotteries = async () => {
         if (!contract || !lotteryCount) return;
 
@@ -138,7 +132,6 @@ function ContractManager() {
             <div className="actions-section">
                 <h2>Contract Actions</h2>
 
-                {/* Fund Contract */}
                 <div className="action-card">
                     <h3>Fund Contract</h3>
                     <div className="form-group">
@@ -159,7 +152,6 @@ function ContractManager() {
                     </div>
                 </div>
 
-                {/* Get Lottery Details */}
                 <div className="action-card">
                     <h3>Get Lottery Details</h3>
                     <div className="form-group">
@@ -190,7 +182,6 @@ function ContractManager() {
                     )}
                 </div>
 
-                {/* Get Last Lotteries */}
                 <div className="action-card">
                     <h3>Get Last Lotteries</h3>
                     <div className="form-group">
