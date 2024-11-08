@@ -1,0 +1,25 @@
+{
+  "short_name": "Hexa Protocol",
+  "name": "Hexa Protocol Lottery dApp",
+  "icons": [
+    {
+      "src": "hexa-favicon.ico",
+      "sizes": "256x256 128x128 64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "hexa-logo-transparent.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "hexa-logo-transparent.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#6d0b91",
+  "background_color": "#ffffff"
+}
