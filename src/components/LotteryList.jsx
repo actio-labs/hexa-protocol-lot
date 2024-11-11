@@ -132,7 +132,7 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
               </div>
             </div>
             <div className="price-section">
-              <div className="price-tag">Entry Price</div>
+              <div className="price-tag">Entry Price </div>
               <div className="price-value">
                 {lottery.participationFee} {lottery.tokenInfo.symbol}
               </div>
