@@ -116,7 +116,7 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
             <div className="token-section">
               <div className={`token-logo ${lottery.tokenInfo.symbol !== 'USDC' && lottery.tokenInfo.symbol !== 'TAIKO' ? 'grayscale' : ''}`}>
                 <img 
-                  src={`${process.env.PUBLIC_URL}/${lottery.tokenInfo.symbol.toLowerCase()}pnglogo.png`}
+                  src={`/hexa-protocol-lot/${lottery.tokenInfo.symbol.toLowerCase()}pnglogo.png`}
                   alt={lottery.tokenInfo.symbol}
                   onError={(e) => {
                     e.target.src = `${process.env.PUBLIC_URL}/taikopnglogo.png`;

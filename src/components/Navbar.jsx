@@ -12,7 +12,7 @@ const Navbar = ({ account, onConnect, isCorrectNetwork }) => {
     <nav className="navbar">
       <div className="navbar-brand">
         <img 
-          src="/hexa-logo-transparent.png" 
+          src="/hexa-protocol-lot/hexa-logo-transparent.png" 
           alt="Hexa Protocol Logo" 
           className="navbar-logo"
         />
