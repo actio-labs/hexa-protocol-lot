@@ -14,7 +14,7 @@ function ContractManager() {
     const [fundAmount, setFundAmount] = useState('');
     const [lotteryCount, setLotteryCount] = useState('');
 
-    const CONTRACT_ADDRESS = "0x54e17216aD4A4BbA8F7F9314a036F8373Cc4a91e";
+    const CONTRACT_ADDRESS = "0x12561339ad52a1FeaabDB3499D449633Dc3CA340";
     const HEKLA_RPC_URL = "https://rpc.hekla.taiko.xyz";
 
     useEffect(() => {

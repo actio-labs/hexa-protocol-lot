@@ -8,7 +8,7 @@ function Home({ account }) {
   const [lotteryContract, setLotteryContract] = useState(null);
 
   const HEKLA_RPC_URL = "https://rpc.hekla.taiko.xyz";
-  const CONTRACT_ADDRESS = "0x54e17216aD4A4BbA8F7F9314a036F8373Cc4a91e";
+  const CONTRACT_ADDRESS = "0x12561339ad52a1FeaabDB3499D449633Dc3CA340";
 
   const tokenData = {
     "0x2029Ca1e4A5954781a271d6Fa3598bF4434969f5": { name: "Bridged Horse Token", symbol: "HORSE.t" },
