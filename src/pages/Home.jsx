@@ -142,7 +142,7 @@ function Home({ account }) {
         textAlign: 'center',
         paddingTop: '30px' // Navbar ile başlık arasına boşluk
       }}>
-        Active Lotteriesss
+        Active Lotteries
       </h1>
       <LotteryList 
         lotteries={lotteries}
