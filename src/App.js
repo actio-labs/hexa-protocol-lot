@@ -35,10 +35,7 @@ function App() {
         }
 
         try {
-            // Önce localStorage'dan hesap kontrolü yap
             const savedAccount = localStorage.getItem('connectedAccount');
-            
-            // Eğer kayıtlı hesap varsa, MetaMask'tan hesapları kontrol et
             if (savedAccount) {
                 const accounts = await window.ethereum.request({ method: 'eth_accounts' });
                 if (accounts.length > 0) {
@@ -46,7 +43,6 @@ function App() {
                     const isCorrect = await checkNetwork();
                     setIsCorrectNetwork(isCorrect);
                 } else {
-                    // Eğer MetaMask'ta hesap yoksa localStorage'ı temizle
                     localStorage.removeItem('connectedAccount');
                     setAccount(null);
                 }
@@ -66,7 +62,6 @@ function App() {
             return;
         }
 
-        setIsInitializing(true);
         try {
             const accounts = await window.ethereum.request({
                 method: 'eth_requestAccounts'
@@ -74,46 +69,35 @@ function App() {
             
             if (accounts.length > 0) {
                 setAccount(accounts[0]);
-                // Bağlanan hesabı localStorage'a kaydet
                 localStorage.setItem('connectedAccount', accounts[0]);
-                
                 const isCorrect = await checkNetwork();
                 setIsCorrectNetwork(isCorrect);
             }
         } catch (error) {
             console.error('Failed to connect:', error);
             localStorage.removeItem('connectedAccount');
-        } finally {
-            setIsInitializing(false);
         }
     };
 
-    // Event listeners
     useEffect(() => {
         checkWalletAndNetwork();
 
         if (window.ethereum) {
             window.ethereum.on('chainChanged', async (chainId) => {
-                setIsInitializing(true);
                 const isCorrect = chainId === TAIKO_HEKLA_CHAIN_ID;
                 setIsCorrectNetwork(isCorrect);
-                setIsInitializing(false);
             });
 
             window.ethereum.on('accountsChanged', (accounts) => {
-                setIsInitializing(true);
                 if (accounts.length > 0) {
                     setAccount(accounts[0]);
-                    // Hesap değiştiğinde localStorage'ı güncelle
                     localStorage.setItem('connectedAccount', accounts[0]);
                     checkNetwork().then(setIsCorrectNetwork);
                 } else {
                     setAccount(null);
                     setIsCorrectNetwork(false);
-                    // Hesap bağlantısı kesildiğinde localStorage'ı temizle
                     localStorage.removeItem('connectedAccount');
                 }
-                setIsInitializing(false);
             });
         }
 
@@ -125,26 +109,10 @@ function App() {
         };
     }, []);
 
-    // İnitializing durumunda warning gösterme
-    if (isInitializing) {
-        return (
-            <Router>
-                <Layout
-                    account={account}
-                    onConnect={handleConnect}
-                    isCorrectNetwork={true}
-                >
-                    <Routes>
-                        <Route path="/" element={<Home account={account} />} />
-                        <Route path="/my-tickets" element={<MyTickets />} />
-                    </Routes>
-                </Layout>
-            </Router>
-        );
-    }
+    const routerBasename = process.env.NODE_ENV === 'production' ? '/hexa-protocol-lot' : '';
 
     return (
-        <Router>
+        <Router basename={routerBasename}>
             <Layout
                 account={account}
                 onConnect={handleConnect}
@@ -152,6 +120,7 @@ function App() {
             >
                 <Routes>
                     <Route path="/" element={<Home account={account} />} />
+                    <Route path="/home" element={<Home account={account} />} />
                     <Route path="/my-tickets" element={<MyTickets />} />
                     <Route path="/create-lottery" element={<CreateLottery />} />
                     <Route path="/contract-manager" element={<ContractManager />} />

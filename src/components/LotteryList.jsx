@@ -57,11 +57,9 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
       );
       await tx.wait();
       
-      // Approval durumunu güncelle
       await checkApproval(lottery);
     } catch (error) {
       console.error("Approve failed:", error);
-      alert("Failed to approve: " + error.message);
     } finally {
       setLoading(prev => ({ ...prev, [lottery.id]: false }));
     }
@@ -79,28 +77,31 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
 
       const tx = await contractWithSigner.participate(lottery.id);
       await tx.wait();
-      alert("Successfully joined the lottery!");
     } catch (error) {
       console.error("Join failed:", error);
-      alert("Failed to join: " + error.message);
     } finally {
       setLoading(prev => ({ ...prev, [lottery.id]: false }));
     }
   };
 
   // Buton işlemi
-  const handleButtonClick = (lottery) => {
+  const handleButtonClick = async (lottery) => {
     if (loading[lottery.id]) return;
     
     if (!account) {
-      alert("Please connect your wallet first");
-      return;
+        try {
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            return;
+        } catch (error) {
+            console.error("Wallet connection failed:", error);
+            return;
+        }
     }
 
     if (!approvals[lottery.id]) {
-      handleApprove(lottery);
+        handleApprove(lottery);
     } else {
-      handleJoin(lottery);
+        handleJoin(lottery);
     }
   };
 
@@ -115,10 +116,10 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
             <div className="token-section">
               <div className={`token-logo ${lottery.tokenInfo.symbol !== 'USDC' && lottery.tokenInfo.symbol !== 'TAIKO' ? 'grayscale' : ''}`}>
                 <img 
-                  src={`/${lottery.tokenInfo.symbol.toLowerCase()}pnglogo.png`}
+                  src={`${process.env.PUBLIC_URL}/${lottery.tokenInfo.symbol.toLowerCase()}pnglogo.png`}
                   alt={lottery.tokenInfo.symbol}
                   onError={(e) => {
-                    e.target.src = '/taikopnglogo.png';
+                    e.target.src = `${process.env.PUBLIC_URL}/taikopnglogo.png`;
                   }}
                 />
               </div>
