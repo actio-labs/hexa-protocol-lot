@@ -5,6 +5,10 @@ on:
     branches:
       - main  # Eğer farklı bir dal kullanıyorsanız burayı değiştirin
 
+permissions:
+  contents: write
+  deployments: write 
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
