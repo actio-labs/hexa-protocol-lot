@@ -1,5 +1,34 @@
-/* Layout ve Container Stilleri */
+/* Reset ve Temel Stiller */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #1e1b4b 0%, #1a1a20 50%, #0e0a14 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #ffffff;
+}
+
+/* Background */
+#matter-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Layout Stilleri */
 .app-container {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,597 +37,124 @@
 .main-content {
   flex: 1;
   padding: 20px;
-  background-color: #f8f9fa;
+  margin-top: 60px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
 }
 
 /* Navbar Stilleri */
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
-.nav-brand a {
+.nav-brand {
   font-size: 1.5rem;
   font-weight: bold;
+  color: #ffffff;
   text-decoration: none;
-  color: #333;
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
+  align-items: center;
 }
 
-.nav-links a {
+.nav-link {
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  color: #666;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color 0.2s;
 }
 
-.nav-links a:hover {
-  color: #007bff;
+.nav-link:hover {
+  color: #ffffff;
+}
+
+/* Connect Wallet Button */
+.connect-wallet-btn {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(90deg, #9333ea, #7e22ce);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.connect-wallet-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
 }
 
 /* Lottery List Stilleri */
-.lottery-container {
-  display: flex;
-  gap: 2rem;
-  padding: 20px;
-}
-
 .lottery-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  max-width: 1200px;
+  gap: 24px;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
 }
 
+/* Lottery Card - Modern Tasarım 2024 */
 .lottery-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-  border-radius: 20px;
+  background: linear-gradient(
+    169deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(21px);
+  border-radius: 28px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(4px);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
 }
 
-.lottery-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
-  border-color: rgba(232, 121, 249, 0.3);
+.lottery-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.06),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
 }
 
-.lottery-item {
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: #fff;
+.lottery-card:hover::before {
+  opacity: 1;
 }
 
-.lottery-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.lottery-item.selected {
-  border-color: #007bff;
-  background-color: #e7f1ff;
-}
-
-.lottery-item h3 {
-  margin: 0 0 10px 0;
-  color: #333;
-}
-
-.lottery-item p {
-  margin: 5px 0;
-  color: #666;
-}
-
-/* Lottery Details Stilleri */
-.lottery-details {
-  flex: 2;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-.details-content {
-  margin-top: 20px;
-}
-
-.details-content p {
-  margin: 10px 0;
-  color: #444;
-}
-
-/* Genel Sayfa Stilleri */
-.home, .my-tickets, .create-lottery {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-h1 {
-  color: #333;
-  margin-bottom: 1.5rem;
-}
-
-/* Responsive Tasarım */
-@media (max-width: 768px) {
-  .lottery-container {
-    flex-direction: column;
-  }
-
-  .lottery-list {
-    max-width: 100%;
-  }
-
-  .nav-links {
-    gap: 1rem;
-  }
-
-  .navbar {
-    padding: 1rem;
-  }
-}
-
-/* Lottery Table Stilleri */
-.lottery-table {
-  width: 100%;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
-
-.lottery-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.lottery-table th {
-  padding: 16px;
-  text-align: left;
-  font-weight: 600;
-  color: #64748b;
-  background-color: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.lottery-table td {
-  padding: 16px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.lottery-row {
-  transition: background-color 0.2s;
-}
-
-.lottery-row:hover {
-  background-color: #f8fafc;
-}
-
-/* Token Info Stili */
-.token-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.token-info img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-}
-
-.token-info div {
-  display: flex;
-  flex-direction: column;
-}
-
-.token-name {
-  font-weight: 500;
-  color: #1e293b;
-}
-
-.token-symbol {
-  font-size: 0.875rem;
-  color: #64748b;
-}
-
-/* Progress Bar Stili */
-.participants-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 6px;
-  background-color: #e2e8f0;
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.progress {
-  height: 100%;
-  background-color: #3b82f6;
-  border-radius: 3px;
-  transition: width 0.3s ease;
-}
-
-/* Status Badge Stili */
-.status {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.status.active {
-  background-color: #dcfce7;
-  color: #166534;
-}
-
-.status.ended {
-  background-color: #fee2e2;
-  color: #991b1b;
-}
-
-/* Join Button Stili */
-.join-button {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  background-color: #3b82f6;
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.join-button:hover:not(:disabled) {
-  background-color: #2563eb;
-}
-
-.join-button:disabled {
-  background-color: #e2e8f0;
-  color: #94a3b8;
-  cursor: not-allowed;
-}
-
-/* Responsive Düzenlemeler */
-@media (max-width: 1024px) {
-  .lottery-table {
-    overflow-x: auto;
-  }
-  
-  .token-name {
-    max-width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-@media (max-width: 768px) {
-  .lottery-table th,
-  .lottery-table td {
-    padding: 12px;
-  }
-  
-  .token-info img {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-/* Lottery Details Panel Stilleri */
-.lottery-details {
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  min-width: 300px;
-  max-width: 400px;
-}
-
-.lottery-details h2 {
-  color: #2c3e50;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #eee;
-}
-
-.details-content {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.details-content p {
-  margin: 0;
-  color: #495057;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.details-content strong {
-  color: #2c3e50;
-}
-
-/* Responsive Düzenlemeler */
-@media (max-width: 1024px) {
-  .lottery-container {
-    flex-direction: column;
-  }
-
-  .lottery-details {
-    max-width: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .lottery-table {
-    margin: 0 -20px;
-    border-radius: 0;
-  }
-
-  .lottery-table td, 
-  .lottery-table th {
-    padding: 12px;
-  }
-
-  .status {
-    padding: 4px 8px;
-    min-width: 60px;
-  }
-}
-
-/* Lottery Grid Layout */
-.lottery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-  padding: 20px;
-}
-
-/* Lottery Card Styles */
-.lottery-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Card Top Section */
-.card-top {
+/* Card Header */
+.card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
-.token-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.token-logo img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-}
-
-.token-info p {
-  color: #666;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.token-info h2 {
-  margin: 4px 0 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.price-section {
-  text-align: right;
-}
-
-.price-section p {
-  color: #666;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.price-info h2 {
-  margin: 4px 0 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-/* Horizontal Line */
-.horizontal-line {
-  height: 1px;
-  background: #eee;
-  margin: 15px 0;
-}
-
-/* Card Middle Section */
-.rounds-wrapper {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.round-info, .time-info {
-  flex: 1;
-}
-
-.round-info p, .time-info p {
-  color: #666;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.round-info h2, .time-info h2 {
-  margin: 4px 0 0;
-  font-size: 1.1rem;
-  color: #333;
-}
-
-/* Progress Bar */
-.progress-wrapper {
-  margin: 15px 0;
-}
-
-.progress-label {
-  margin-bottom: 8px;
-}
-
-.progress-label p {
-  color: #666;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.progress-bar {
-  height: 8px;
-  background: #eee;
-  border-radius: 4px;
-  position: relative;
-  overflow: hidden;
-}
-
-.progress-background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.progress-background span {
-  font-size: 0.8rem;
-  color: #666;
-}
-
-.progress-indicator {
-  height: 100%;
-  background: #3b82f6;
-  border-radius: 4px;
-  transition: width 0.3s ease;
-}
-
-.progress-stats {
-  margin-top: 8px;
-  text-align: right;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-/* Card Bottom Section */
-.card-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.distribution-info p {
-  color: #666;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.distribution-info h2 {
-  margin: 4px 0 0;
-  font-size: 1.1rem;
-  color: #333;
-}
-
-.join-button {
-  padding: 8px 24px;
-  border-radius: 20px;
-  border: none;
-  background: linear-gradient(to right, #3b82f6, #2563eb);
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.join-button:hover:not(.disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.join-button.disabled {
-  background: #eee;
-  color: #999;
-  cursor: not-allowed;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .lottery-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Modern Lottery List Styles */
-.lottery-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.lottery-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.lottery-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-/* Card Top Section */
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
+/* Token Section */
 .token-section {
   display: flex;
   align-items: center;
@@ -606,219 +162,258 @@ h1 {
 }
 
 .token-logo {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: linear-gradient(45deg, #f3f4f6, #ffffff);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease;
 }
 
 .token-logo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
-.token-name-wrapper {
+.token-info {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.token-info h2 {
+.token-name {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1a1a1a;
-  margin: 0;
+  color: #ffffff;
+  letter-spacing: -0.02em;
 }
 
-.token-symbol {
-  color: #6b7280;
-  font-size: 0.875rem;
-  padding: 0.25rem 0.75rem;
-  background: #f3f4f6;
-  border-radius: 12px;
-}
-
-.lottery-id {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-top: 0.25rem;
-}
-
-.price-section {
-  text-align: right;
-}
-
-.price-tag {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-bottom: 0.25rem;
-}
-
-.price-value {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  background: linear-gradient(45deg, #3b82f6, #2563eb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Card Middle Section */
-.card-middle {
-  padding: 1.5rem 0;
-  border-top: 1px solid #f3f4f6;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.status-section {
+.token-meta {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
 }
 
+.token-meta .divider {
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+/* Status Badge */
 .status-badge {
-  padding: 0.5rem 1rem;
-  border-radius: 24px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
 .status-badge.active {
-  background: #dcfce7;
-  color: #166534;
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-badge.active::before {
+  background: #34d399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
 }
 
 .status-badge.ended {
-  background: #fee2e2;
-  color: #991b1b;
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.time-info {
-  font-size: 0.875rem;
-  color: #6b7280;
+.status-badge.ended::before {
+  background: #f87171;
+  box-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
 }
 
 /* Progress Section */
 .progress-section {
-  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .progress-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progress-title {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.progress-stats {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .progress-bar {
-  height: 8px;
-  background: #f3f4f6;
-  border-radius: 4px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
   overflow: hidden;
+  position: relative;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(45deg, #e879f9, #9333ea);
-  border-radius: 4px;
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, #9333ea, #7e22ce);
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
 }
 
-.progress-percent {
+.progress-fill::after {
+  content: '';
   position: absolute;
-  right: 8px;
-  top: -18px;
-  font-size: 0.75rem;
-  color: #9333ea;
-  font-weight: 600;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shine 2s infinite;
 }
 
-/* Card Bottom Section */
-.card-bottom {
-  margin-top: 1.5rem;
+/* Card Footer */
+.card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.info-item {
+.price-info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 4px;
 }
 
-.info-label {
-  font-size: 0.875rem;
-  color: #6b7280;
+.price-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.info-value {
-  font-size: 1rem;
+.price-value {
+  font-size: 1.25rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
+.token-symbol {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Action Button */
 .action-button {
   padding: 0.75rem 1.5rem;
-  border-radius: 12px;
+  background: linear-gradient(90deg, #9333ea, #7e22ce);
   border: none;
-  background: linear-gradient(45deg, #3b82f6, #2563eb);
+  border-radius: 12px;
   color: white;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.action-button:hover:not(.disabled) {
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.action-button:hover::before {
+  left: 100%;
+}
+
+.action-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
 }
 
-.action-button.disabled {
-  background: #e5e7eb;
-  color: #9ca3af;
-  cursor: not-allowed;
+/* Animations */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Mouse Move Effect */
+.lottery-card {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .lottery-list {
-    padding: 1rem;
-  }
-
   .lottery-card {
+    padding: 1.5rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .progress-section {
     padding: 1rem;
   }
 
-  .card-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .price-section {
-    text-align: left;
-    width: 100%;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .card-bottom {
+  .card-footer {
     flex-direction: column;
     gap: 1rem;
   }
@@ -828,503 +423,36 @@ h1 {
   }
 }
 
-/* Mevcut CSS'e ekleyin */
-
-.default-logo {
-  opacity: 0.5; /* Gri görünüm için opaklık */
-  filter: grayscale(100%); /* Tamamen gri yapma */
+.navbar-logo {
+  height: 40px;
+  width: auto;
+  margin-right: 1rem;
 }
 
-.token-logo.grayscale img {
-  filter: grayscale(100%) opacity(50%);
-  transition: filter 0.3s ease;
+.brand-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 
-.token-logo.grayscale:hover img {
-  filter: grayscale(80%) opacity(60%);
-}
-
-.token-entry {
+.wallet-section {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
 }
 
-.token-entry img {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-}
-
-.action-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-width: 160px;
-}
-
-/* Progress bar hover efekti */
-.progress-bar:hover .progress-fill {
-  background: linear-gradient(45deg, #d946ef, #7e22ce);
-}
-
-/* Katılımcı listesi için yeni stiller */
-.participants-list {
-  margin-top: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.participant-address {
-  font-size: 0.75rem;
-  color: #6b7280;
-  background: #f3f4f6;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-family: monospace;
-}
-
-/* Katılımcı listesi stilleri */
-.participants-list {
-  margin-top: 16px;
-  padding: 12px;
-  background: #f8fafc;
-  border-radius: 8px;
-}
-
-.participants-label {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-bottom: 8px;
-}
-
-.address-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.address-chip {
-  background: white;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 0.75rem;
-  color: #6b7280;
-  border: 1px solid #e5e7eb;
-  font-family: 'Roboto Mono', monospace;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.address-chip:hover {
-  background: #f3f4f6;
-  border-color: #d1d5db;
-  transform: translateY(-1px);
-}
-
-/* Piyango efekti için yeni stiller */
-.lottery-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, #e879f9, #9333ea);
-  border-radius: 20px 20px 0 0;
-}
-
-.lottery-card::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 10px,
-    rgba(147, 51, 234, 0.1) 10px,
-    rgba(147, 51, 234, 0.1) 20px
-  );
-}
-
-/* Token logo container'ını güncelle */
-.token-logo {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 2px;
-  border: 2px solid #ffffff;
-}
-
-/* Progress bar stilini güncelle */
-.progress-bar {
-  height: 10px;
-  background: rgba(147, 51, 234, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(147, 51, 234, 0.2);
-}
-
-.progress-fill {
-  background: linear-gradient(90deg, #e879f9, #9333ea);
-  box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
-}
-
-/* Katılımcı adresleri için yeni stil */
-.address-chip {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  color: #6b7280;
-  border: 1px solid rgba(147, 51, 234, 0.2);
-  font-family: 'Roboto Mono', monospace;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(147, 51, 234, 0.1);
-}
-
-.address-chip:hover {
-  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
-  border-color: rgba(147, 51, 234, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.15);
-}
-
-/* Action button stilini güncelle */
-.action-button {
-  background: linear-gradient(90deg, #9333ea, #7e22ce);
-  border-radius: 16px;
-  padding: 12px 24px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.2);
-}
-
-.action-button:hover:not(.disabled) {
-  background: linear-gradient(90deg, #a855f7, #9333ea);
-  box-shadow: 0 6px 16px rgba(147, 51, 234, 0.3);
-}
-
-/* Status badge stilini güncelle */
-.status-badge {
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-}
-
-.status-badge.active {
-  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-  color: #166534;
-  border: 1px solid rgba(22, 101, 52, 0.1);
-}
-
-.status-badge.ended {
-  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-  color: #991b1b;
-  border: 1px solid rgba(153, 27, 27, 0.1);
-}
-
-/* Price value stilini güncelle */
-.price-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #9333ea, #7e22ce);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(147, 51, 234, 0.1);
-}
-
-/* Lottery ID stilini güncelle */
-.lottery-id {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(147, 51, 234, 0.1);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  color: #9333ea;
-  font-weight: 600;
-}
-
-/* Piyango efekti için stilleri güncelle */
-.lottery-card {
-  /* ... diğer stiller aynı ... */
-  position: relative;
-  overflow: hidden;
-}
-
-/* Aktif piyangolar için yeşil efekt */
-.lottery-card.active::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-  border-radius: 20px 20px 0 0;
-}
-
-.lottery-card.active::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 10px,
-    rgba(22, 163, 74, 0.1) 10px,
-    rgba(22, 163, 74, 0.1) 20px
-  );
-}
-
-/* Bitmiş piyangolar için kırmızı efekt */
-.lottery-card.ended::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, #ef4444, #dc2626);
-  border-radius: 20px 20px 0 0;
-}
-
-.lottery-card.ended::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 10px,
-    rgba(220, 38, 38, 0.1) 10px,
-    rgba(220, 38, 38, 0.1) 20px
-  );
-}
-
-/* Hover efektlerini güncelle */
-.lottery-card.active:hover {
-  border-color: rgba(22, 163, 74, 0.3);
-  box-shadow: 0 12px 40px rgba(22, 163, 74, 0.15);
-}
-
-.lottery-card.ended:hover {
-  border-color: rgba(220, 38, 38, 0.3);
-  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.15);
-}
-
-/* Action button için loading durumu */
-.action-button.disabled {
-  background: #e5e7eb;
-  color: #9ca3af;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.action-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-/* Connect Wallet Button Stili */
-.connect-wallet-btn {
-  padding: 8px 16px;
-  border-radius: 12px;
-  border: none;
-  background: linear-gradient(90deg, #9333ea, #7e22ce);
+.network-warning-btn {
+  padding: 0.5rem 1rem;
+  background: #ef4444;
   color: white;
+  border: none;
+  border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
 }
 
-.connect-wallet-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.2);
-}
-
-/* Navbar'daki boşlukları ayarla */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #666;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #9333ea;
-}
-
-/* Ağ uyarısı için stiller */
-.wrong-network-warning {
-  color: #ef4444;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 4px 12px;
-  background: #fee2e2;
-  border-radius: 20px;
-}
-
-.connect-wallet-btn.wrong-network {
-  background: linear-gradient(90deg, #ef4444, #dc2626);
-}
-
-.connect-wallet-btn.wrong-network:hover {
-  background: linear-gradient(90deg, #dc2626, #b91c1c);
-}
-
-/* Create Lottery Form Styles */
-.create-lottery-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.create-lottery-container h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #1a1a1a;
-}
-
-.create-lottery-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.form-group label {
-    font-weight: 600;
-    color: #4b5563;
-}
-
-.form-group input,
-.form-group select {
-    padding: 0.75rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #3b82f6;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.create-button {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    color: white;
-    padding: 1rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.create-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-}
-
-.create-button:disabled {
-    background: #e5e7eb;
-    cursor: not-allowed;
-}
-
-/* Contract Manager Styles */
-.contract-manager-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-}
-
-.info-section {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.info-section h2 {
-    margin-bottom: 1rem;
-    color: #1a1a1a;
-}
-
-.info-section p {
-    margin: 0.5rem 0;
-    color: #4b5563;
-}
-
-.actions-section {
-    display: grid;
-    gap: 1.5rem;
-}
-
-.action-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.action-card h3 {
-    margin-bottom: 1rem;
-    color: #1a1a1a;
-}
-
-.details-display {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 8px;
-}
-
-.details-display h4 {
-    margin-bottom: 0.5rem;
-    color: #1a1a1a;
-}
-
-.details-display p {
-    margin: 0.25rem 0;
-    color: #4b5563;
+.account-address {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-family: monospace;
 }

@@ -6,7 +6,6 @@ import Home from './pages/Home';
 import MyTickets from './pages/MyTickets';
 import CreateLottery from './pages/CreateLottery';
 import ContractManager from './pages/ContractManager';
-import './styles/main.css';
 
 function App() {
     const [account, setAccount] = useState(null);

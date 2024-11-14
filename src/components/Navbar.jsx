@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css';
 
 const Navbar = ({ account, onConnect, isCorrectNetwork }) => {
   const formatAddress = (address) => {
@@ -10,7 +9,7 @@ const Navbar = ({ account, onConnect, isCorrectNetwork }) => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">
+      <div className="nav-brand">
         <img 
           src="/hexa-protocol-lot/hexa-logo-transparent.png" 
           alt="Hexa Protocol Logo" 
@@ -20,19 +19,19 @@ const Navbar = ({ account, onConnect, isCorrectNetwork }) => {
       </div>
       
       <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/my-tickets">My Tickets</Link>
-        <Link to="/create-lottery">Create Lottery</Link>
-        <Link to="/contract-manager">Contract Manager</Link>
+        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/my-tickets" className="nav-link">My Tickets</Link>
+        <Link to="/create-lottery" className="nav-link">Create Lottery</Link>
+        <Link to="/contract-manager" className="nav-link">Contract Manager</Link>
       </div>
 
       <div className="wallet-section">
         {!account ? (
-          <button className="connect-wallet-button" onClick={onConnect}>
+          <button className="connect-wallet-btn">
             Connect Wallet
           </button>
         ) : !isCorrectNetwork ? (
-          <button className="network-warning-button">
+          <button className="network-warning-btn">
             Wrong Network
           </button>
         ) : (
