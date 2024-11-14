@@ -152,7 +152,7 @@ const Background = () => {
     });
 
     // Intervaller
-    const tokenInterval = setInterval(addNewToken, 2000);
+    const tokenInterval = setInterval(addNewToken, 750);
 
     // Görünmez yan duvarları ekle
     Composite.add(world, [

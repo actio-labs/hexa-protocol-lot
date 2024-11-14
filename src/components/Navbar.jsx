@@ -27,7 +27,7 @@ const Navbar = ({ account, onConnect, isCorrectNetwork }) => {
 
       <div className="wallet-section">
         {!account ? (
-          <button className="connect-wallet-btn">
+          <button className="connect-wallet-btn" onClick={onConnect}>
             Connect Wallet
           </button>
         ) : !isCorrectNetwork ? (

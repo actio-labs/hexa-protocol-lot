@@ -24,7 +24,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.8rem 0;
-  border-bottom: 1px solid #eee;
+  
 }
 
 .info-item:last-child {
@@ -33,7 +33,7 @@
 
 .info-item span:first-child {
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
 }
 
 .action-section {

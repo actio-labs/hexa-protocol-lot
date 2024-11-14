@@ -138,12 +138,6 @@ function Home({ account }) {
 
   return (
     <div className="home">
-      <h1 style={{ 
-        textAlign: 'center',
-        paddingTop: '30px' // Navbar ile başlık arasına boşluk
-      }}>
-        Active Lotteries
-      </h1>
       <LotteryList 
         lotteries={lotteries}
         account={account}
