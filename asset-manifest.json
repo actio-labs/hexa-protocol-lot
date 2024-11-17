@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://actio-labs.github.io/hexa-protocol-lot/static/css/main.6d663681.css",
-    "main.js": "https://actio-labs.github.io/hexa-protocol-lot/static/js/main.3f3e8b54.js",
+    "main.css": "https://actio-labs.github.io/hexa-protocol-lot/static/css/main.3b40bc0c.css",
+    "main.js": "https://actio-labs.github.io/hexa-protocol-lot/static/js/main.fe08666f.js",
     "static/js/453.6327c8b1.chunk.js": "https://actio-labs.github.io/hexa-protocol-lot/static/js/453.6327c8b1.chunk.js",
     "index.html": "https://actio-labs.github.io/hexa-protocol-lot/index.html",
-    "main.6d663681.css.map": "https://actio-labs.github.io/hexa-protocol-lot/static/css/main.6d663681.css.map",
-    "main.3f3e8b54.js.map": "https://actio-labs.github.io/hexa-protocol-lot/static/js/main.3f3e8b54.js.map",
+    "main.3b40bc0c.css.map": "https://actio-labs.github.io/hexa-protocol-lot/static/css/main.3b40bc0c.css.map",
+    "main.fe08666f.js.map": "https://actio-labs.github.io/hexa-protocol-lot/static/js/main.fe08666f.js.map",
     "453.6327c8b1.chunk.js.map": "https://actio-labs.github.io/hexa-protocol-lot/static/js/453.6327c8b1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6d663681.css",
-    "static/js/main.3f3e8b54.js"
+    "static/css/main.3b40bc0c.css",
+    "static/js/main.fe08666f.js"
   ]
 }
