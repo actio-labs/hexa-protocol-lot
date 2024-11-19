@@ -232,7 +232,9 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
                               ? 'current-user' 
                               : address.toLowerCase() === lottery.winner?.toLowerCase() 
                                 ? 'winner-user'
-                                : 'other-user'
+                                : address.toLowerCase() === lottery.winner?.toLowerCase() && address.toLowerCase() === account?.toLowerCase()
+                                  ? 'winner-user current-user'
+                                  : 'other-user'
                           }`}
                           title={address}
                         >
@@ -355,7 +357,9 @@ const LotteryList = ({ lotteries, account, lotteryContract }) => {
                               ? 'current-user' 
                               : address.toLowerCase() === lottery.winner?.toLowerCase() 
                                 ? 'winner-user'
-                                : 'other-user'
+                                : address.toLowerCase() === lottery.winner?.toLowerCase() && address.toLowerCase() === account?.toLowerCase()
+                                  ? 'winner-user current-user'
+                                  : 'other-user'
                           }`}
                           title={address}
                         >
